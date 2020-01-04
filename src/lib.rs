@@ -1,7 +1,6 @@
-extern crate libc;
-
 #[macro_use]
-mod macros;
+extern crate cfg_if;
+extern crate libc;
 
 cfg_if! {
     if #[cfg(all(unix, target_os = "macos"))] {
