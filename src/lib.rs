@@ -6,7 +6,7 @@ extern crate libc;
 extern crate winapi;
 
 cfg_if! {
-    if #[cfg(all(unix, not(target_os = "openbsd")))] {
+    if #[cfg(unix)] {
         mod unix;
         pub use unix::*;
     } else if #[cfg(windows)] {

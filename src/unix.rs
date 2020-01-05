@@ -3,10 +3,10 @@ use std::io;
 use std::path::Path;
 
 /// Size used to align the data buffer
-pub const ALIGN_SIZE: i32 = 4096;
+pub const ALIGN_SIZE: usize = 4096;
 
 /// Minimum block size
-pub const BLOCK_SIZE: i32 = 4096;
+pub const BLOCK_SIZE: usize = 4096;
 
 /// DirectIO extensions to [`std::fs::File`].
 ///

@@ -5,10 +5,10 @@ use std::path::Path;
 use winapi::um::winbase::{FILE_FLAG_NO_BUFFERING, FILE_FLAG_WRITE_THROUGH};
 
 /// Size used to align the data buffer
-pub const ALIGN_SIZE: i32 = 4096;
+pub const ALIGN_SIZE: usize = 4096;
 
 /// Minimum block size
-pub const BLOCK_SIZE: i32 = 4096;
+pub const BLOCK_SIZE: usize = 4096;
 
 /// DirectIO extensions to [`std::fs::File`].
 ///
