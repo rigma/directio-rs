@@ -30,7 +30,7 @@ pub trait DirectFileExt {
     /// use std::fs::File;
     ///
     /// fn main() -> std::io::Result<()> {
-    ///     let mut f = fs::direct_open("foo.txt")?;
+    ///     let mut f = File::direct_open("foo.txt")?;
     ///     Ok(())
     /// }
     /// ```
