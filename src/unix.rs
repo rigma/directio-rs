@@ -1,6 +1,6 @@
-use std::path::Path;
 use std::fs;
 use std::io;
+use std::path::Path;
 
 /// Size used to align the data buffer
 pub const ALIGN_SIZE: i32 = 4096;
@@ -40,7 +40,7 @@ pub trait DirectFileExt {
     fn direct_open<P>(path: P) -> io::Result<fs::File>
     where
         P: AsRef<Path>;
-  }
+}
 
 impl DirectFileExt for fs::File {
     fn direct_open<P>(path: P) -> io::Result<fs::File>
@@ -64,7 +64,7 @@ pub trait DirectOpenOptionsExt {
     /// Add `O_DIRECT` to the `flags` argument of `open`.
     ///
     /// By providing this flag on UNIX family, you'll be able to access to the
-    /// file without passing through kernel buffering. This is slower but may 
+    /// file without passing through kernel buffering. This is slower but may
     /// be useful when you need some data to be really on the storage disk (eg.
     /// for data replication for instance).
     ///
@@ -81,7 +81,7 @@ pub trait DirectOpenOptionsExt {
     ///
     /// ```
     fn direct(&mut self) -> &mut Self;
-  }
+}
 
 impl DirectOpenOptionsExt for fs::OpenOptions {
     fn direct(&mut self) -> &mut Self {
