@@ -8,7 +8,10 @@ pub const ALIGN_SIZE: i32 = 4096;
 /// Minimum block size
 pub const BLOCK_SIZE: i32 = 4096;
 
-/// Unix-specific DirectIO extensions to [`std::fs::File`].
+/// DirectIO extensions to [`std::fs::File`].
+///
+/// Thoses extensions are implemented for each OS family which are hidden
+/// behind the same API interface.
 ///
 /// [`std::fs::file`]: https://doc.rust-lang.org/std/fs/struct.File.html
 pub trait DirectFileExt {
@@ -32,12 +35,12 @@ pub trait DirectFileExt {
     /// }
     /// ```
     ///
-    /// [`DirectOpenOptionsExt::direct`]: trait.DirectFileExt.html#method.direct
+    /// [`DirectOpenOptionsExt::direct`]: trait.DirectOpenOptionsExt.html#tymethod.direct
     /// [`std::fs::File::open`]: https://doc.rust-lang.org/std/fs/struct.File.html#method.open
     fn direct_open<P>(path: P) -> io::Result<fs::File>
     where
         P: AsRef<Path>;
-}
+  }
 
 impl DirectFileExt for fs::File {
     fn direct_open<P>(path: P) -> io::Result<fs::File>
@@ -51,7 +54,10 @@ impl DirectFileExt for fs::File {
     }
 }
 
-/// Unix-specific DirectIO extensions to [`std::fs::OpenOptions`].
+/// DirectIO extensions to [`std::fs::OpenOptions`].
+///
+/// Thoses extensions are implemented for each OS family which are hidden
+/// behind the same API interface.
 ///
 /// [`std::fs::OpenOptions`]: https://doc.rust-lang.org/std/fs/struct.OpenOptions.html
 pub trait DirectOpenOptionsExt {
@@ -75,7 +81,7 @@ pub trait DirectOpenOptionsExt {
     ///
     /// ```
     fn direct(&mut self) -> &mut Self;
-}
+  }
 
 impl DirectOpenOptionsExt for fs::OpenOptions {
     fn direct(&mut self) -> &mut Self {

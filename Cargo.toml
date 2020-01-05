@@ -1,6 +1,6 @@
 [package]
 name = "directio"
-version = "0.1.2"
+version = "0.1.3"
 authors = ["rigma <rigbuntu@gmail.com>"]
 license = "MIT"
 edition = "2018"
