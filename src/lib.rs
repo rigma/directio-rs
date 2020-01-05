@@ -2,6 +2,9 @@
 extern crate cfg_if;
 extern crate libc;
 
+#[cfg(windows)]
+extern crate winapi;
+
 cfg_if! {
     if #[cfg(all(unix, target_os = "macos"))] {
         mod darwin;
