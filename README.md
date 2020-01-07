@@ -1,6 +1,6 @@
 # DirectIO - A lightweighted library to use DirectIO
 
-A lightweighted library for Rust language to use DirectIO under all supported OSes (except for OpenBSD).
+A lightweighted library for Rust language to use DirectIO under all supported OSes.
 
 DirectIO is an IO mode to interact with storage drivers without buffering data in the OS. It is useful when
 you want to replicate data accross multiple storages or to manage your own cache logic.
