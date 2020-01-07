@@ -1,6 +1,6 @@
+use directio::DirectOpenOptionsExt;
 use std::fs::{self, File, OpenOptions};
 use std::io::{Read, Write};
-use directio::DirectOpenOptionsExt;
 
 #[test]
 fn it_should_write_a_file() {
@@ -28,10 +28,7 @@ fn it_should_read_a_file() {
         .write_all(&expected)
         .unwrap();
 
-    let file = OpenOptions::new()
-        .read(true)
-        .direct()
-        .open("bar.txt");
+    let file = OpenOptions::new().read(true).direct().open("bar.txt");
     assert!(file.is_ok());
 
     let mut file = file.unwrap();

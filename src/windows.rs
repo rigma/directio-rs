@@ -34,7 +34,7 @@ pub trait DirectFileExt {
     /// ```no_run
     /// use std::fs::File;
     /// use directio::DirectFileExt;
-    /// 
+    ///
     /// fn main() -> std::io::Result<()> {
     ///     let mut f = File::direct_create("foo.txt")?;
     ///     Ok(())

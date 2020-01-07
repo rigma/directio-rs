@@ -1,6 +1,6 @@
+use directio::DirectFileExt;
 use std::fs::{self, File};
 use std::io::{Read, Write};
-use directio::DirectFileExt;
 
 #[test]
 fn it_should_write_a_file() {
