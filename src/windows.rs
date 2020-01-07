@@ -2,7 +2,10 @@ use std::fs;
 use std::io;
 use std::os::windows::fs::OpenOptionsExt;
 use std::path::Path;
-use winapi::um::winbase::{FILE_FLAG_NO_BUFFERING, FILE_FLAG_WRITE_THROUGH};
+use winapi::um::{
+    winbase::{FILE_FLAG_NO_BUFFERING, FILE_FLAG_WRITE_THROUGH},
+    winnt::FILE_ATTRIBUTE_NORMAL,
+};
 
 /// Size used to align the data buffer
 pub const ALIGN_SIZE: usize = 4096;
@@ -81,7 +84,7 @@ impl DirectFileExt for fs::File {
         fs::OpenOptions::new()
             .create(true)
             .write(true)
-            .attributes(FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH)
+            .attributes(FILE_ATTRIBUTE_NORMAL | FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH)
             .open(path.as_ref())
     }
 
@@ -91,7 +94,7 @@ impl DirectFileExt for fs::File {
     {
         fs::OpenOptions::new()
             .read(true)
-            .attributes(FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH)
+            .attributes(FILE_ATTRIBUTE_NORMAL | FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH)
             .open(path.as_ref())
     }
 }
@@ -127,6 +130,6 @@ pub trait DirectOpenOptionsExt {
 
 impl DirectOpenOptionsExt for fs::OpenOptions {
     fn direct(&mut self) -> &mut Self {
-        self.attributes(FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH)
+        self.attributes(FILE_ATTRIBUTE_NORMAL | FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH)
     }
 }

@@ -1,6 +1,6 @@
 [package]
 name = "directio"
-version = "0.1.6"
+version = "0.1.7"
 authors = ["rigma <rigbuntu@gmail.com>"]
 license = "MIT"
 edition = "2018"
@@ -12,4 +12,4 @@ cfg-if = "0.1.10"
 libc = "0.2.66"
 
 [target.'cfg(windows)'.dependencies]
-winapi = { version = "0.3.8", features = ["winbase"] }
+winapi = { version = "0.3.8", features = ["winbase", "winnt"] }
