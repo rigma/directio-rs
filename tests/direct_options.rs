@@ -1,4 +1,4 @@
-use directio::DirectOpenOptionsExt;
+use direct_io::DirectOpenOptionsExt;
 use std::fs::{self, File, OpenOptions};
 use std::io::{Read, Write};
 

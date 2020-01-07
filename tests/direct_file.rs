@@ -1,4 +1,4 @@
-use directio::DirectFileExt;
+use direct_io::DirectFileExt;
 use std::fs::{self, File};
 use std::io::{Read, Write};
 
