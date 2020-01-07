@@ -38,7 +38,7 @@ pub trait DirectFileExt {
     /// }
     /// ```
     ///
-    /// [`FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH`]: https://docs.microsoft.com/fr-fr/windows/win32/fileio/file-buffering
+    /// [`FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH`]: https://docs.microsoft.com/windows/win32/fileio/file-buffering
     /// [`DirectOpenOptionsExt::direct`]: trait.DirectOpenOptionsExt.html#tymethod.direct
     /// [`std::fs::File::open`]: https://doc.rust-lang.org/std/fs/struct.File.html#method.open
     fn direct_create<P>(path: P) -> io::Result<fs::File>
@@ -65,7 +65,7 @@ pub trait DirectFileExt {
     /// }
     /// ```
     ///
-    /// [`FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH`]: https://docs.microsoft.com/fr-fr/windows/win32/fileio/file-buffering
+    /// [`FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH`]: https://docs.microsoft.com/windows/win32/fileio/file-buffering
     /// [`DirectOpenOptionsExt::direct`]: trait.DirectOpenOptionsExt.html#tymethod.direct
     /// [`std::fs::File::open`]: https://doc.rust-lang.org/std/fs/struct.File.html#method.open
     fn direct_open<P>(path: P) -> io::Result<fs::File>
