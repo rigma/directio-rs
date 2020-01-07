@@ -7,10 +7,10 @@ extern crate winapi;
 
 cfg_if! {
     if #[cfg(unix)] {
-        mod unix;
+        pub mod unix;
         pub use unix::*;
     } else if #[cfg(windows)] {
-        mod windows;
+        pub mod windows;
         pub use windows::*;
     } else {
         // TODO: add API here with unimplemented macros
