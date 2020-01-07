@@ -17,7 +17,35 @@ pub const BLOCK_SIZE: usize = 4096;
 ///
 /// [`std::fs::file`]: https://doc.rust-lang.org/std/fs/struct.File.html
 pub trait DirectFileExt {
-    /// Open a file in read-only mode with the `O_DIRECT` flag.
+    /// Open a file in write-only mode with the [`FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH`]
+    /// flag.
+    ///
+    /// See [`DirectOpenOptionsExt::direct`] for more details.
+    ///
+    /// # Errors
+    ///
+    /// This function is returning the same errors that [`sttd::fs::File::create`].
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use std::fs::File;
+    /// use directio::DirectFileExt;
+    /// 
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut f = File::direct_create("foo.txt")?;
+    ///     Ok(())
+    /// }
+    /// ```
+    ///
+    /// [`FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH`]: https://docs.microsoft.com/fr-fr/windows/win32/fileio/file-buffering
+    /// [`DirectOpenOptionsExt::direct`]: trait.DirectOpenOptionsExt.html#tymethod.direct
+    /// [`std::fs::File::open`]: https://doc.rust-lang.org/std/fs/struct.File.html#method.open
+    fn direct_create<P>(path: P) -> io::Result<fs::File>
+    where
+        P: AsRef<Path>;
+
+    /// Open a file in read-only mode with the [`FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH`] flag.
     ///
     /// See [`DirectOpenOptionsExt::direct`] for more details.
     ///
@@ -28,8 +56,8 @@ pub trait DirectFileExt {
     /// # Examples
     ///
     /// ```no_run
-    /// use directio::DirectFileExt;
     /// use std::fs::File;
+    /// use directio::DirectFileExt;
     ///
     /// fn main() -> std::io::Result<()> {
     ///     let mut f = File::direct_open("foo.txt")?;
@@ -37,6 +65,7 @@ pub trait DirectFileExt {
     /// }
     /// ```
     ///
+    /// [`FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH`]: https://docs.microsoft.com/fr-fr/windows/win32/fileio/file-buffering
     /// [`DirectOpenOptionsExt::direct`]: trait.DirectOpenOptionsExt.html#tymethod.direct
     /// [`std::fs::File::open`]: https://doc.rust-lang.org/std/fs/struct.File.html#method.open
     fn direct_open<P>(path: P) -> io::Result<fs::File>
@@ -45,6 +74,17 @@ pub trait DirectFileExt {
 }
 
 impl DirectFileExt for fs::File {
+    fn direct_create<P>(path: P) -> io::Result<fs::File>
+    where
+        P: AsRef<Path>,
+    {
+        fs::OpenOptions::new()
+            .create(true)
+            .write(true)
+            .attributes(FILE_FLAG_NO_BUFFERING | FILE_FLAG_WRITE_THROUGH)
+            .open(path.as_ref())
+    }
+
     fn direct_open<P>(path: P) -> io::Result<fs::File>
     where
         P: AsRef<Path>,

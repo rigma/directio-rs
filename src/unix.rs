@@ -15,7 +15,34 @@ pub const BLOCK_SIZE: usize = 4096;
 ///
 /// [`std::fs::file`]: https://doc.rust-lang.org/std/fs/struct.File.html
 pub trait DirectFileExt {
-    /// Open a file in read-only mode with the `O_DIRECT` flag.
+    /// Open or create a file in write-only mode with the `O_DIRECT` flag
+    /// (see `man open` for futher details).
+    ///
+    /// See [`DirectOpenOptionsExt::direct`] for more details.
+    ///
+    /// # Errors
+    ///
+    /// This function is returning the same errors of [`std::fs::File::create`].
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use std::fs::File;
+    /// use directio::DirectFileExt;
+    ///
+    /// fn main() -> std::io::Result<()> {
+    ///     let mut f = File::direct_create("foo.txt")?;
+    ///     Ok(())
+    /// }
+    /// ```
+    ///
+    /// [`DirectOpenOptionsExt::direct`]: trait.DirectOpenOptionsExt.html#tymethod.direct
+    /// [`std::fs::File::open`]: https://doc.rust-lang.org/std/fs/struct.File.html#method.open
+    fn direct_create<P>(path: P) -> io::Result<fs::File>
+    where
+        P: AsRef<Path>;
+
+    /// Open a file in read-only mode with the `O_DIRECT` flag (see `man open` for futher details).
     ///
     /// See [`DirectOpenOptionsExt::direct`] for more details.
     ///
@@ -26,8 +53,8 @@ pub trait DirectFileExt {
     /// # Examples
     ///
     /// ```no_run
-    /// use directio::DirectFileExt;
     /// use std::fs::File;
+    /// use directio::DirectFileExt;
     ///
     /// fn main() -> std::io::Result<()> {
     ///     let mut f = File::direct_open("foo.txt")?;
@@ -43,6 +70,16 @@ pub trait DirectFileExt {
 }
 
 impl DirectFileExt for fs::File {
+    fn direct_create<P>(path: P) -> io::Result<fs::File>
+    where
+        P: AsRef<Path>,
+    {
+        fs::OpenOptions::new()
+            .create(true)
+            .direct()
+            .open(path.as_ref())
+    }
+
     fn direct_open<P>(path: P) -> io::Result<fs::File>
     where
         P: AsRef<Path>,
